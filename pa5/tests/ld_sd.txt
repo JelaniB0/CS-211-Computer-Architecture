@@ -1,0 +1,46 @@
+# Implements the program:
+# main:
+#         addi x1, x0, 0x100 # array start
+#
+#         add x2, x1, x1 # 0x200 @ mem[x1]
+#         sd x2, 0(x1)
+#
+#         add x3, x2, x2 # 0x400 @ mem[x1 + 8]
+#         sd x3, 8(x1)
+#
+#         add x4, x3, x3 # 0x800 @ mem[x1 + 16]
+#         sd x4, 16(x1)
+#
+#         add x5, x4, x4 # 0x1000 @ mem[x1 + 24]
+#         sd x5, 24(x1)
+#
+#         add x6, x5, x5 # 0x2000 @ mem[x1 + 32]
+#         sd x6, 32(x1)
+#
+#         ld x7, 0(x1)   # x7  = 0x200      
+#         ld x8, 8(x1)   # x8  = 0x400      
+#         ld x9, 16(x1)  # x9  = 0x800       
+#         ld x10, 24(x1) # x10 = 0x1000         
+#         ld x11, 32(x1) # x11 = 0x2000         
+#         ebreak
+sp 0xfffffffffffffef0 # initial stack pointer
+pc 0xffffffffffffff00 # start address
+
+# <address (hex)> <size> <number (little endian)>
+0xffffffffffffff00 4 10000093 # addi    ra,zero,256
+0xffffffffffffff04 4 00108133 # add     sp,ra,ra
+0xffffffffffffff08 4 0020b023 # sd      sp,0(ra)
+0xffffffffffffff0c 4 002101b3 # add     gp,sp,sp
+0xffffffffffffff10 4 0030b423 # sd      gp,8(ra)
+0xffffffffffffff14 4 00318233 # add     tp,gp,gp
+0xffffffffffffff18 4 0040b823 # sd      tp,16(ra)
+0xffffffffffffff1c 4 004202b3 # add     t0,tp,tp
+0xffffffffffffff20 4 0050bc23 # sd      t0,24(ra)
+0xffffffffffffff24 4 00528333 # add     t1,t0,t0
+0xffffffffffffff28 4 0260b023 # sd      t1,32(ra)
+0xffffffffffffff2c 4 0000b383 # ld      t2,0(ra)
+0xffffffffffffff30 4 0080b403 # ld      s0,8(ra)
+0xffffffffffffff34 4 0100b483 # ld      s1,16(ra)
+0xffffffffffffff38 4 0180b503 # ld      a0,24(ra)
+0xffffffffffffff3c 4 0200b583 # ld      a1,32(ra)
+0xffffffffffffff40 4 00100073 # ebreak

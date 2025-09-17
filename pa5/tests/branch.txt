@@ -1,0 +1,62 @@
+# Implements the program:
+# main:
+#         addi x1, x0, 1
+#         beq x1, x0, .fail1
+#         beq x1, x1, .two
+# .fail1:
+#         addi x31, x0, 1
+#         ebreak
+# .two:
+#         blt x0, x1, .three
+# .fail2:
+#         addi x31, x0, 2
+#         ebreak
+# .three:
+#         bge x0, x1, .fail3
+#         addi x2, x0, -1
+#         bltu x1, x2, .four
+# .fail3:
+#         addi x31, x0, 3
+#         ebreak
+# .four:
+#         bgeu x0, x2, .fail4
+#         ebreak # program complete - x31 should be unmodified!
+# .fail4:
+#         addi x31, x0, 4
+#         ebreak
+
+sp 0x13fbf0 # initial stack pointer (starts below the program)
+pc 0x13fc00 # start address
+
+# <address> <size> <number (little endian)>
+0x13fc00 4 00100093 # addi    ra,zero,1
+0x13fc04 4 00008463 # beq     ra,zero,c <.fail1>
+0x13fc08 4 00108663 # beq     ra,ra,14 <.two>
+
+# .fail1
+0x13fc0c 4 00100f93 # addi    t6,zero,1
+0x13fc10 4 00100073 # ebreak
+
+# .two
+0x13fc14 4 00104663 # blt     zero,ra,20 <.three>
+
+# .fail2
+0x13fc18 4 00200f93 # addi    t6,zero,2
+0x13fc1c 4 00100073 # ebreak
+
+# .three
+0x13fc20 4 00105663 # bge     zero,ra,2c <.fail3>
+0x13fc24 4 fff00113 # addi    sp,zero,-1
+0x13fc28 4 0020e663 # bltu    ra,sp,34 <.four>
+
+# .fail3
+0x13fc2c 4 00300f93 # addi    t6,zero,3
+0x13fc30 4 00100073 # ebreak
+
+# .four
+0x13fc34 4 00207463 # bgeu    zero,sp,3c <.fail4>
+0x13fc38 4 00100073 # ebreak
+
+# .fail4
+0x13fc3c 4 00400f93 # addi    t6,zero,4
+0x13fc40 4 00100073 # ebreak

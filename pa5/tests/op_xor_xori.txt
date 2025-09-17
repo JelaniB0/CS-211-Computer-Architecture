@@ -1,0 +1,20 @@
+# Implements the program:
+# main:
+#         xori    x1, x0, 256
+#         xori    x2, x0, -256
+#
+#         xor    x1, x1, x2  // xor swap x1 and x2
+#         xor    x2, x1, x2 
+#         xor    x1, x1, x2 
+#
+#         ebreak
+sp 0xf0 # initial stack pointer
+pc 0x100 # start address
+
+# <address (hex)> <size> <number (little endian)>
+0x100 4 10004093 # xori    ra,zero,256
+0x104 4 f0004113 # xori    sp,zero,-256
+0x108 4 0020c0b3 # xor     ra,ra,sp
+0x10c 4 0020c133 # xor     sp,ra,sp
+0x110 4 0020c0b3 # xor     ra,ra,sp
+0x114 4 00100073 # ebreak

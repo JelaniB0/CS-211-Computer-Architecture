@@ -1,0 +1,30 @@
+# Computes the sum from 0...12 in a0
+# sum:
+#     addi a0, x0, 12
+#     add a5, x0, a0
+#     addi a0, x0, 0
+# .loop:
+#     beq a5, x0, .done
+#     add a0, a0, a5
+#     addi a5, a5, -1
+#     beq x0, x0, .loop
+# .done:
+#     ebreak # a0 = 78
+sp 0x2f0 # initial stack pointer (starts below the program)
+pc 0x300 # start address
+
+# <address> <size> <number (little endian)>
+# sum
+0x300 4 00c00513 # addi    a0,zero,12
+0x304 4 00a007b3 # add     a5,zero,a0
+0x308 4 00000513 # addi    a0,zero,0
+
+# .loop
+0x30c 4 00078863 # beq     a5,zero,1c <.done>
+0x310 4 00f50533 # add     a0,a0,a5
+0x314 4 fff78793 # addi    a5,a5,-1
+0x318 4 fe000ae3 # beq     zero,zero,c <.loop>
+
+# .done
+0x31c 4 00100073 # ebreak
+

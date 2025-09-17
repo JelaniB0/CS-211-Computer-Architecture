@@ -1,0 +1,44 @@
+# Implements the program:
+# main:
+#         addi    x1, x0, -1 // initialize x1-x4
+#         addi    x2, x0, 1
+#         addi    x3, x0, 1024
+#         addi    x4, x0, -1024
+#
+#         // ADD
+#         add    x5, x1, x2  // x5 = 0
+#         add    x6, x3, x4  // x6 = 0
+#         add    x7, x1, x3  // x7 = 1023
+#         add    x8, x1, x4  // x8 = -1025
+#         add    x9, x2, x3  // x5 = 1025
+#         add    x10, x2, x4 // x6 = -1023
+#         
+#         // SUB
+#         sub    x11, x1, x2  // x5 = -2
+#         sub    x12, x3, x4  // x6 = 2048
+#         sub    x13, x0, x3  // x7 = -1024
+#         sub    x14, x1, x4  // x8 = 1023
+#         sub    x15, x1, x3  // x5 = -1025
+#         sub    x16, x2, x4 // x6 = 1025
+#         ebreak
+sp 0 # initial stack pointer
+pc 0 # start address
+
+# <address (hex)> <size> <number (little endian)>
+0x00 4 fff00093 # addi    ra,zero,-1
+0x04 4 00100113 # addi    sp,zero,1
+0x08 4 40000193 # addi    gp,zero,1024
+0x0c 4 c0000213 # addi    tp,zero,-1024
+0x10 4 002082b3 # add     t0,ra,sp
+0x14 4 00418333 # add     t1,gp,tp
+0x18 4 003003b3 # add     t2,zero,gp
+0x1c 4 00408433 # add     s0,ra,tp
+0x20 4 003084b3 # add     s1,ra,gp
+0x24 4 00410533 # add     a0,sp,tp
+0x28 4 402085b3 # sub     a1,ra,sp
+0x2c 4 40418633 # sub     a2,gp,tp
+0x30 4 403006b3 # sub     a3,zero,gp
+0x34 4 40408733 # sub     a4,ra,tp
+0x38 4 403087b3 # sub     a5,ra,gp
+0x3c 4 40410833 # sub     a6,sp,tp
+0x40 4 00100073 # ebreak

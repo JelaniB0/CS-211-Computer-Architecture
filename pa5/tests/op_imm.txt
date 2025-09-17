@@ -1,0 +1,26 @@
+# Implements the program:
+# main:
+#         addi    x0, x0, 0xfff // try updating x0
+#         addi    x1, x0, 2     // x1 = 2
+#         xori    x2, x1, 6     // x2 = 4
+#         ori     x3, x2, 2     // x3 = 6
+#         andi    x4, x3, 4     // x4 = 4
+#         addi    x5, x4, -2    // x5 = 2
+#         xori    x6, x5, 2     // x6 = 0
+#         ori     x7, x6, -2     // x6 = -2
+#         andi    x8, x7, -3     // x6 = -4
+#         ebreak
+sp 0 # initial stack pointer
+pc 0 # start address
+
+# <address (hex)> <size> <number (little endian)>
+0x0  4 80000013    # addi    zero,zero,-2048
+0x4  4 00200093    # addi    ra,zero,2
+0x8  4 0060c113    # xori    sp,ra,6
+0xc  4 00216193    # ori     gp,sp,2
+0x10 4 0041f213    # andi    tp,gp,4
+0x14 4 ffe20293    # addi    t0,tp,-2
+0x18 4 0022c313    # xori    t1,t0,2
+0x1c 4 ffe36393    # ori     t2,t1,-2
+0x20 4 ffd3f413    # andi    s0,t2,-3
+0x24 4 00100073    # ebreak
