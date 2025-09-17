@@ -1,0 +1,90 @@
+{
+	"funcs": [
+		{
+			// test "int is_hexvalue(int v)"
+			// params: [v]
+			"name": "is_hexvalue",
+			"cases": [
+				{ "params": ["0"], "intended_ret": "1", "points": 1, "visibility": "visible" },
+				{ "params": ["16"], "intended_ret": "0", "points": 1, "visibility": "visible" }
+			]
+		},
+		{
+			// test "int hexdigit_to_value(char c)"
+			// params: [c]
+			"name": "hexdigit_to_value", 
+			"cases": [
+				{ "params": ["1"], "intended_ret": "1", "points": 1, "visibility": "visible" },
+				{ "params": ["a"], "intended_ret": "10", "points": 1, "visibility": "visible" }
+			]
+		},
+		{
+			// test "char value_to_hexdigit(int c)"
+			// params: [c]
+			"name": "value_to_hexdigit",
+			"cases": [
+				// [2.5] c = [0-9]
+				{ "params": ["1"], "intended_ret": "1", "points": 1, "visibility": "visible" },
+				{ "params": ["10"], "intended_ret": "a", "points": 1, "visibility": "visible" }
+			]
+		},
+        {
+			// test "int get_sign_bit_value(struct bv128 bv, int bit_width)"
+            // params: [bv, bit_width]
+			"name": "get_sign_bit_value",
+            "cases": [
+				// example: sign bit is in the 'lo' field
+				{ "params": ["{\"hi\":0,\"lo\":1,\"error\":\"ERROR_NONE\"}", "1"], "intended_ret": "1", "points": 1, "visibility": "visible" },
+				{ "params": ["{\"hi\":0,\"lo\":1,\"error\":\"ERROR_NONE\"}", "64"], "intended_ret": "0", "points": 1, "visibility": "visible" },
+				
+				// example: sign bit is in the 'hi' field
+				{ "params": ["{\"hi\":1,\"lo\":0,\"error\":\"ERROR_NONE\"}", "65"], "intended_ret": "1", "points": 1, "visibility": "visible" },
+				{ "params": ["{\"hi\":1,\"lo\":0,\"error\":\"ERROR_NONE\"}", "128"], "intended_ret": "0", "points": 1, "visibility": "visible" }
+			]
+        },
+        {
+			// test "struct bv128 str_to_bv128(char str[], int str_len, int bit_width)"
+            // params: [str, str_len, bit_width]
+			"name": "str_to_bv128",
+            "cases": [
+				// ill-formed string
+				{ "params": ["0xg", "3", "1"], "intended_ret": "{\"hi\":0,\"lo\":0,\"error\":\"ERROR_MALFORMED_ADDEND\"}", "points": 1, "visibility": "visible" },
+				
+				// well-formed strings keep at 67 for now as well. Originally 64
+				{ "params": ["0x1", "3", "8"], "intended_ret": "{\"hi\":0,\"lo\":1,\"error\":\"ERROR_NONE\"}", "points": 1, "visibility": "visible" },
+				{ "params": ["0xfedcba9876543210", "18", "64"], "intended_ret": "{\"hi\":18446744073709551615,\"lo\":18364758544493064720,\"error\":\"ERROR_NONE\"}", "points": 1, "visibility": "visible" },
+				{ "params": ["0xffffffffffffffff", "18", "128"], "intended_ret": "{\"hi\":0,\"lo\":18446744073709551615,\"error\":\"ERROR_NONE\"}", "points": 1, "visibility": "visible" },
+				{ "params": ["0x1", "3", "1"], "intended_ret": "{\"hi\":18446744073709551615,\"lo\":18446744073709551615,\"error\":\"ERROR_NONE\"}", "points": 1, "visibility": "visible" },
+				{ "params": ["0xffffffffffffffffffffffffffffffff", "34", "128"], "intended_ret": "{\"hi\":18446744073709551615,\"lo\":18446744073709551615,\"error\":\"ERROR_NONE\"}", "points": 1, "visibility": "visible" }
+            ]
+        },
+        {
+			// test "struct bv128 add_bv128(struct bv128 a, struct bv128 b)"
+			// params: [a, b]
+            "name": "add_bv128",
+            "cases": [
+				// adding zeroes
+				{ 
+					  "params": ["{\"hi\":0,\"lo\":0,\"error\":\"ERROR_NONE\"}", "{\"hi\":0,\"lo\":0,\"error\":\"ERROR_NONE\"}"]
+					, "intended_ret": "{\"hi\":0,\"lo\":0,\"error\":\"ERROR_NONE\"}", "points": 1, "visibility": "visible" 
+				},
+				{ 
+					  "params": ["{\"hi\":0,\"lo\":0,\"error\":\"ERROR_NONE\"}", "{\"hi\":0,\"lo\":1,\"error\":\"ERROR_NONE\"}"]
+					, "intended_ret": "{\"hi\":0,\"lo\":1,\"error\":\"ERROR_NONE\"}", "points": 1, "visibility": "visible" 
+				},
+
+				// adding ones
+				{ 
+					  "params": ["{\"hi\":0,\"lo\":1,\"error\":\"ERROR_NONE\"}", "{\"hi\":0,\"lo\":1,\"error\":\"ERROR_NONE\"}"]
+					, "intended_ret": "{\"hi\":0,\"lo\":2,\"error\":\"ERROR_NONE\"}", "points": 1, "visibility": "visible" 
+				},
+
+				// adding negative one to positive one
+				{ 
+					  "params": ["{\"hi\":18446744073709551615,\"lo\":18446744073709551615,\"error\":\"ERROR_NONE\"}", "{\"hi\":0,\"lo\":1,\"error\":\"ERROR_NONE\"}"]
+					, "intended_ret": "{\"hi\":0,\"lo\":0,\"error\":\"ERROR_NONE\"}", "points": 1, "visibility": "visible" 
+				}
+            ]
+        }
+	]
+}

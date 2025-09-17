@@ -1,0 +1,8 @@
+
+> Root Directory {props=[type:D, perms:RW], num_children=1}
+    > Directory 0 {props=[type:D, perms:RW], num_children=1}
+        > Directory 1 {props=[type:D, perms:RW], num_children=1}
+            > Directory 2 {props=[type:D, perms:RW], num_children=1}
+                > Directory 3 {props=[type:D, perms:RW], num_children=1}
+                    > Directory 4 {props=[type:D, perms:RW], num_children=1}
+                        > Child File {props=[type:F, perms:RW], num_children=0}

@@ -1,0 +1,7 @@
+
+> Bank of America {props=[type:D, perms:RW], num_children=3}
+    > 2023 {props=[type:F, perms:RW], num_children=0}
+    > March {props=[type:D, perms:RW], num_children=1}
+        > Week 2 {props=[type:D, perms:RW], num_children=1}
+            > statement.pdf {props=[type:F, perms:RW], num_children=0}
+    > Chase {props=[type:D, perms:RW], num_children=0}

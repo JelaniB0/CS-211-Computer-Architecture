@@ -1,0 +1,1 @@
+build/main.c.o.asan: src/main.c

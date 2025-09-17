@@ -1,0 +1,4 @@
+
+> Root Directory {props=[type:D, perms:RW], num_children=2}
+    > Directory 0 {props=[type:D, perms:-W], num_children=0}
+    > Directory 1 {props=[type:D, perms:-W], num_children=0}

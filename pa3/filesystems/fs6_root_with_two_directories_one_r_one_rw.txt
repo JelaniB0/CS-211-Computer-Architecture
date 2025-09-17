@@ -1,0 +1,4 @@
+
+> Root Directory {props=[type:D, perms:RW], num_children=2}
+    > Read-Only Directory {props=[type:D, perms:R-], num_children=0}
+    > Read-Write Directory {props=[type:D, perms:RW], num_children=0}

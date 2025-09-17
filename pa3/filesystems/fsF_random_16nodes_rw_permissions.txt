@@ -1,0 +1,17 @@
+
+> root {props=[type:D, perms:RW], num_children=2}
+    > file0 {props=[type:F, perms:RW], num_children=0}
+    > dir0 {props=[type:D, perms:RW], num_children=6}
+        > dir1 {props=[type:D, perms:RW], num_children=1}
+            > file1 {props=[type:F, perms:RW], num_children=0}
+        > dir2 {props=[type:D, perms:RW], num_children=2}
+            > dir3 {props=[type:D, perms:RW], num_children=2}
+                > file2 {props=[type:F, perms:RW], num_children=0}
+                > dir4 {props=[type:D, perms:RW], num_children=0}
+            > dir5 {props=[type:D, perms:RW], num_children=2}
+                > file3 {props=[type:F, perms:RW], num_children=0}
+                > dir6 {props=[type:D, perms:RW], num_children=0}
+        > dir7 {props=[type:D, perms:RW], num_children=0}
+        > file4 {props=[type:F, perms:RW], num_children=0}
+        > file5 {props=[type:F, perms:RW], num_children=0}
+        > dir8 {props=[type:D, perms:RW], num_children=0}

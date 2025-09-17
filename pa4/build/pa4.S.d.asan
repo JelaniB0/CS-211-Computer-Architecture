@@ -1,0 +1,1 @@
+build/pa4.S.o.asan: src/pa4.S
